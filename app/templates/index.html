@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block content %}
+<h2>Approved Posts</h2>
+
+{% for post in posts %}
+<article>
+  <h3>{{ post.title }}</h3>
+  <p>{{ post.content }}</p>
+  <small>By {{ post.author }}</small>
+  <hr />
+</article>
+{% else %}
+<p>No approved posts yet.</p>
+{% endfor %} {% endblock %}

@@ -1,0 +1,12 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Title of the post",
+      "content": "Content of the post",
+      "image": null,
+      "status": "approved",
+      "author": "author"
+    }
+  ]
+}

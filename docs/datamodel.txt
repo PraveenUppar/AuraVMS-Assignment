@@ -1,0 +1,13 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "My First Post",
+      "content": "This is the body...",
+      "image": "https://example.com/image.png",
+      "status": "pending",
+      "author": "writer",
+      "created_at": "2026-01-20T10:15:00"
+    }
+  ]
+}

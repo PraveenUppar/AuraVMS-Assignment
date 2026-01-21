@@ -1,0 +1,50 @@
+Tech stack
+
+- Python has excellent document parsing libraries
+- FastAPI forces clean structure (not a spaghetti Flask app)
+- JSON storage removes DB complexity (and is allowed)
+- Email + SMTP is easiest in Python
+- Testing is natural with pytest
+
+Decisions
+
+- No DB
+- No Auth
+- Easy parsing
+- Email service
+
+Build order:
+
+- Parser module 
+- State machine logic
+- JSON storage
+- FastAPI routes (upload, approve, reject)
+- Email service
+- Basic auth
+- Frontend templates
+- Tests
+- Deployment
+- README
+
+File and folder structure
+app/
+  main.py
+  auth/
+  parser/
+  workflow/
+  services/
+  storage/
+  templates/
+tests/
+data/
+README.md
+
+Parser rules
+
+Read text
+Split lines
+Skip leading empties
+Detect image line
+Extract title
+Extract content
+Validate title

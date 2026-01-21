@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<h2>Pending Posts</h2>
+
+{% for post in posts %}
+<article>
+  <h3>{{ post.title }}</h3>
+  <p>{{ post.content }}</p>
+
+  <form method="post" action="/review/{{ post.id }}">
+    <button name="action" value="approve">Approve</button>
+    <button name="action" value="reject">Reject</button>
+  </form>
+  <hr />
+</article>
+{% else %}
+<p>No pending posts.</p>
+{% endfor %} {% endblock %}

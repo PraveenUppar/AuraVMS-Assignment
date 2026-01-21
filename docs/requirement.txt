@@ -1,0 +1,43 @@
+Core functionality
+ 
+1. Upload a document 
+
+2. Parse the document - Extract the content(title + Heading + content) + image 
+- Accept a .docx .txt or .md file.
+(.txt and .md — built-in Python)
+- Treat the first line as the title, the rest as the content.
+- if the first line looks like ![caption](image.png) or a URL, treat it as an optional image reference
+
+3. Upload the content/post to the admin
+- Store submissions in‑memory or in a simple JSON file; no heavy database required.
+
+4. Admin can approve or reject the content 
+- When a post is submitted, send an email (you can use Gmail smtp) to a hard‑coded manager address with the title, a snippet of content (first 100 chars), and a link to approve/reject.
+- Include two links in the email (e.g., http://localhost:8000/approve?post_id=123 and .../reject?...) that update the post status to approved or rejected.
+- On the frontend, show a simple list of pending posts and allow the admin to click approve/reject to update the status.
+
+5. Display approved posts
+- Create a public page (e.g., /posts) that lists all approved posts with title, content, and image (if present).
+
+Non‑functional expectations
+
+- Clear module split (upload/parser vs. workflow vs. emailer).
+- Basic error handling (invalid file type, missing title, email config missing).
+- At least one unit test for the parser and one for the state transition logic.​
+- README with setup steps
+
+Deliverables
+- Hosted app with the UI
+- 2 login ids, one for manager, one for blog writer
+- Github repo with the code
+- README.md as described.
+
+Evaluation rubric (weights)
+- Image extraction & upload (10%): Extracts the image provided by user properly. You can make it url based, or docx embedded image.
+- Parsing & upload correctness (20%): Extracts title/content reliably; handles edge cases (empty file, missing title).
+- User experience (10%): Ease of using your tool, its robustness, and clean, minimalist design.
+- Workflow state & logic (15%): Pending → approved/rejected transitions work; no accidental overwrites.
+- Email notification (20%): Email is triggered on submit; contains correct info and actionable links (or clear log if SMTP is skipped).
+- Deadline adherence (10%): users who submit complete, functioning project before the deadline.
+- Code quality & structure (10%): Separation of concerns; readable naming; not a monolithic script.
+- Tests & docs (5%): At least one test; README explains setup and decisions.
