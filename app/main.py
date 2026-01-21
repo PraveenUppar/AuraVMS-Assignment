@@ -23,37 +23,58 @@ from app.auth.simple_auth import get_current_user
 
 # Writer submits a post
 @app.post("/posts")
-def create_post(req: CreatePostRequest,user=Depends(get_current_user)):
+def create_post(
+    author: str = Form(...),
+    file: UploadFile = File(...),
+    # user=Depends(get_current_user)
+):
+    # Only writers can submit
+    # if user["role"] != "writer":
+    #     raise HTTPException(status_code=403, detail="Only writers can create posts.")
 
-    if user["role"] != "writer":
-        raise HTTPException(status_code=403, detail="Only writers can create posts.")
-    
+    # Validate file type
+    if not file.filename.endswith((".txt", ".md")):
+        raise HTTPException(status_code=400, detail="Only .txt or .md files are allowed")
+
     try:
-        parsed = parse_txt_md(req.text)
+        # Read file content
+        raw = file.file.read()
+        text = raw.decode("utf-8")
+
+        # Parse the document
+        parsed = parse_txt_md(text)
+
+        # Create Post object
+        post = Post(
+            id=0,
+            title=parsed.title,
+            content=parsed.content,
+            image=parsed.image,
+            author=author
+        )
+
+        # Store and send notification
+        stored = store.add(post)
+        send_review_notification(stored)
+
+    except UnicodeDecodeError:
+        raise HTTPException(status_code=400, detail="File must be UTF-8 encoded")
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
-    post = Post(
-        id=0,
-        title=parsed.title,
-        content=parsed.content,
-        image=parsed.image,
-        author=req.author,
-    )
-
-    stored = store.add(post)
-    send_review_notification(stored)
 
     return {
         "id": stored.id,
         "status": stored.status.value,
+        "message": "Post submitted for review"
     }
 
 # Manager reviews a post
 @app.post("/posts/{post_id}/review")
-def review_post_api(post_id: int, req: ReviewActionRequest,user=Depends(get_current_user)):
-    if user["role"] != "manager":
-        raise HTTPException(status_code=403, detail="Managers only")
+def review_post_api(post_id: int, req: ReviewActionRequest,
+                    # user=Depends(get_current_user)
+                    ):
+    # if user["role"] != "manager":
+    #     raise HTTPException(status_code=403, detail="Managers only")
     post = store.get_by_id(post_id)
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")

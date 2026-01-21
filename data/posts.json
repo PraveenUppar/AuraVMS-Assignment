@@ -7,6 +7,14 @@
       "image": null,
       "status": "approved",
       "author": "author"
+    },
+    {
+      "id": 2,
+      "title": "Introduction to Nginx",
+      "content": "Nginx is a robust and efficient web server that is widely used in modern web infrastructure. Unlike traditional web servers that use a multi-threaded architecture, Nginx employs a non-threaded, event-driven architecture. This design allows Nginx to handle many more connections simultaneously, making it highly suitable for high-traffic websites.",
+      "image": null,
+      "status": "approved",
+      "author": "John DOe"
     }
   ]
 }
