@@ -1,18 +1,190 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Review System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- Global Variables for Easy Color Changes --- */
+      :root {
+        --primary: #2563eb; /* Royal Blue */
+        --primary-hover: #1d4ed8;
+        --bg-body: #f3f4f6; /* Light Gray Background */
+        --bg-card: #ffffff;
+        --text-main: #1f2937;
+        --text-muted: #6b7280;
+        --success: #10b981; /* Green */
+        --danger: #ef4444; /* Red */
+        --border-radius: 8px;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      /* --- Reset & Base Styles --- */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-body);
+        color: var(--text-main);
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* --- Layout --- */
+      .navbar {
+        background-color: var(--bg-card);
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .navbar h1 {
+        font-size: 1.25rem;
+        margin: 0;
+        color: var(--primary);
+      }
+
+      .nav-links a {
+        margin-left: 20px;
+        font-weight: 600;
+        color: var(--text-muted);
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* --- Cards (Posts) --- */
+      .card {
+        background: var(--bg-card);
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        border: 1px solid #e5e7eb;
+      }
+
+      .card h3 {
+        color: var(--text-main);
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .card small {
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      /* --- Forms & Inputs --- */
+      label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: var(--border-radius);
+        box-sizing: border-box; /* Fixes padding issues */
+        font-family: inherit;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      /* --- Buttons --- */
+      button {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        font-size: 0.9rem;
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: white;
+        width: 100%;
+      }
+      .btn-approve {
+        background-color: var(--success);
+        color: white;
+      }
+      .btn-reject {
+        background-color: var(--danger);
+        color: white;
+        margin-left: 10px;
+      }
+
+      .actions {
+        margin-top: 1.5rem;
+        display: flex;
+      }
+
+      /* --- Utilities --- */
+      .empty-state {
+        text-align: center;
+        color: var(--text-muted);
+        margin-top: 3rem;
+      }
+      .alert {
+        padding: 1rem;
+        background: #dbeafe;
+        color: #1e40af;
+        border-radius: var(--border-radius);
+        margin-bottom: 1rem;
+      }
+    </style>
   </head>
   <body>
-    <h1>Blog Review System</h1>
-
-    <nav>
-      <a href="/">Home</a> | <a href="/submit">Submit</a> |
-      <a href="/review">Review</a>
+    <nav class="navbar">
+      <h1>Blog Review System</h1>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/submit">Submit</a>
+        <a href="/review">Review Queue</a>
+      </div>
     </nav>
 
-    <hr />
-
-    {% block content %}{% endblock %}
+    <div class="container">{% block content %}{% endblock %}</div>
   </body>
 </html>

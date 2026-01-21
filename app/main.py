@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Form
+from fastapi import FastAPI, HTTPException, Form, UploadFile, File
 from pathlib import Path
 
 from app.storage.json_store import JsonPostStore
@@ -104,9 +104,26 @@ def submit_form(request: Request):
     return templates.TemplateResponse("submit.html", {"request": request})
 
 @app.post("/submit")
-def submit_post(author: str = Form(...), text: str = Form(...)):
+def submit_post(
+    request: Request,
+    author: str = Form(...),
+    file: UploadFile = File(...)
+):
+    if not file.filename.endswith((".txt", ".md")):
+        return templates.TemplateResponse(
+            "submit.html",
+            {
+                "request": request,
+                "message": "Only .txt or .md files are allowed"
+            }
+        )
+
     try:
+        raw = file.file.read()
+        text = raw.decode("utf-8")
+
         parsed = parse_txt_md(text)
+
         post = Post(
             id=0,
             title=parsed.title,
@@ -114,15 +131,25 @@ def submit_post(author: str = Form(...), text: str = Form(...)):
             image=parsed.image,
             author=author
         )
-        store.add(post)
-        message = "Post submitted for review, Awaiting for manager approval."
+
+        stored = store.add(post)
+        send_review_notification(stored)
+
+        message = "Post submitted for review. Awaiting manager approval."
+
+    except UnicodeDecodeError:
+        message = "File must be UTF-8 encoded."
     except Exception as e:
         message = f"Error: {e}"
 
     return templates.TemplateResponse(
         "submit.html",
-        {"request": {}, "message": message}
+        {
+            "request": request,
+            "message": message
+        }
     )
+
 
 
 @app.get("/review")

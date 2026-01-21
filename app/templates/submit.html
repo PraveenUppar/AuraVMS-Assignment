@@ -1,17 +1,27 @@
 {% extends "base.html" %} {% block content %}
-<h2>Submit a Post</h2>
 
-{% if message %}
-<p>{{ message }}</p>
-{% endif %}
+<div class="card">
+  <h2>Submit a Post via File</h2>
 
-<form method="post">
-  <label>Author</label><br />
-  <input name="author" required /><br /><br />
+  {% if message %}
+  <div class="alert">{{ message }}</div>
+  {% endif %}
 
-  <label>Content</label><br />
-  <textarea name="text" rows="10" cols="60" required></textarea><br /><br />
+  <form method="post" enctype="multipart/form-data">
+    <label for="author">Author Name</label>
+    <input
+      type="text"
+      name="author"
+      id="author"
+      placeholder="John Doe"
+      required
+    />
 
-  <button type="submit">Submit</button>
-</form>
+    <label for="file">Upload Content</label>
+    <input type="file" name="file" id="file" accept=".txt,.md" required />
+
+    <button type="submit" class="btn-primary">Submit for Review</button>
+  </form>
+</div>
+
 {% endblock %}

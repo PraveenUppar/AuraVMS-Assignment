@@ -1,17 +1,20 @@
 {% extends "base.html" %} {% block content %}
-<h2>Pending Posts</h2>
+
+<h2>Pending Review</h2>
 
 {% for post in posts %}
-<article>
+<article class="card">
   <h3>{{ post.title }}</h3>
+  <small>Submitted by {{ post.author }}</small>
   <p>{{ post.content }}</p>
 
-  <form method="post" action="/review/{{ post.id }}">
-    <button name="action" value="approve">Approve</button>
-    <button name="action" value="reject">Reject</button>
+  <form method="post" action="/review/{{ post.id }}" class="actions">
+    <button name="action" value="approve" class="btn-approve">Approve</button>
+    <button name="action" value="reject" class="btn-reject">Reject</button>
   </form>
-  <hr />
 </article>
 {% else %}
-<p>No pending posts.</p>
+<div class="empty-state">
+  <p>All caught up! No posts pending review.</p>
+</div>
 {% endfor %} {% endblock %}

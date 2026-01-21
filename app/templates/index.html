@@ -1,13 +1,15 @@
 {% extends "base.html" %} {% block content %}
-<h2>Approved Posts</h2>
+
+<h2>Latest Posts</h2>
 
 {% for post in posts %}
-<article>
+<article class="card">
   <h3>{{ post.title }}</h3>
-  <p>{{ post.content }}</p>
   <small>By {{ post.author }}</small>
-  <hr />
+  <p>{{ post.content }}</p>
 </article>
 {% else %}
-<p>No approved posts yet.</p>
+<div class="empty-state">
+  <p>No approved posts yet. Be the first to submit!</p>
+</div>
 {% endfor %} {% endblock %}
