@@ -6,8 +6,6 @@ This project models a **blog review workflow** where writers submit posts, manag
 
 Deployed link: https://auravms-assignment.onrender.com
 
----
-
 ## Features
 
 - REST APIs built with **FastAPI**
@@ -17,8 +15,6 @@ Deployed link: https://auravms-assignment.onrender.com
 - Markdown / text parsing for blog content
 - Server‑side rendered UI using **Jinja2**
 - cloud deployment (Render)
-
----
 
 ## Credentials to share (assignment requirement)
 
@@ -32,7 +28,12 @@ Manager login:
 - username: manager
 - password: manager123
 
----
+## Email Notifications
+
+On post submission, the system triggers an email notification to the manager.
+
+For simplicity and reliability, the email service currently logs the email
+content. The email module can be easily extended to integrate Gmail SMTP if needed.
 
 ## Overview
 
@@ -162,6 +163,12 @@ Swagger UI:
 
 ```
 http://localhost:8000/docs
+```
+
+Run Tests:
+
+```
+pytest
 ```
 
 ---
